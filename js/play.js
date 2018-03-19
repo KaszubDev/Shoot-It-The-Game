@@ -25,7 +25,7 @@ var playState = {
         bum.makeParticles('ufo');
         //bum.emitter.gravity = 200;
         
-        scoreText = game.add.text(100,650,'Score: 0',{fontSize: '32px',fill:'#000'});
+        scoreText = game.add.text(100,650,'Score: 0',{fontSize: '32px',fill:'#ffffff'});
 },
 
 

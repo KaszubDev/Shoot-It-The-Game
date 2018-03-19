@@ -8,6 +8,7 @@ var loadState = {
         game.load.image('napis', 'assets/napis.png');
         game.load.image('tytul', 'assets/Tytul.png');
         game.load.image('playing', 'assets/playing.png');
+        game.load.image('instrukcja', 'assets/instrukcja.png');
         game.load.image('noplaying', 'assets/noplaying.png');
         game.load.audio('shot', 'assets/shot.wav');
         game.load.audio('menu2', 'assets/menu.mp3');
