@@ -12,10 +12,7 @@ var loadState = {
         game.load.image('noplaying', 'assets/noplaying.png');
         game.load.audio('shot', 'assets/shot.wav');
         game.load.audio('menu2', 'assets/menu.mp3');
-        var punkt;
         var scoreText;
-        var score = 0;
-        //var x = true;
 	},
 
 	create: function() {

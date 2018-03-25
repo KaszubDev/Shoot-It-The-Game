@@ -6,7 +6,7 @@ var menuState = {
         game.add.sprite(game.world.centerX-232.5,630,'napis');
         game.add.sprite(game.world.centerX-331.5,70,'tytul');
         game.add.sprite(game.world.centerX-260,150,'instrukcja');
-        this.button = game.add.button(1200,650,'playing',this.Muzyka,this); //spritesheet
+        this.button = game.add.button(1200,650,'playing',this.Muzyka,this); 
         muzyka = game.add.audio('menu2');
         muzyka.play('', 0,1,true);
         this.x = 1;
