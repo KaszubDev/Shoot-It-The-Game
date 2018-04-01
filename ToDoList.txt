@@ -1,6 +1,0 @@
--czasówka; po jakimœ czasie koniec gry i podsumowanie punktów
--obiekty których nie wolno niszczyæ bo minusowe punkty bêd¹ albo/i jakieœ rzeczy w stylu:
-a)zwolnienie celownika
-b)brak mo¿liwoœci strzelania na jakiœ czas
-c)
-
