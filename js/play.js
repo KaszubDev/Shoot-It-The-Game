@@ -3,9 +3,11 @@ var playState = {
 	create: function() {
         game.add.sprite(0,0,'tlo');
         this.player = game.add.sprite(Math.round((Math.random()*1200)), Math.round((Math.random()*700)), 'celownik');
-        //punkt = new Phaser.Point(this.player.x+40,this.player.y+38.5); 
+        //punkt = new Phaser.Point(this.player.x+40,this.player.y+38.5);
+        this.punkt = game.add.sprite(0,0,'puste');
+        game.physics.enable(this.punkt, Phaser.Physics.ARCADE);
         
-        this.score = 0;
+        score = 0;
         this.ile_statkow = 8;
         
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -20,7 +22,7 @@ var playState = {
         for(let i=0;i<8;i++)
             {
                 var target = this.targets.create(Math.round((Math.random()*1146)),0,'ufo');
-                target.body.gravity.y = Math.round((Math.random()*40));
+                target.body.gravity.y = Math.round((Math.random()*120));
                 target.checkWorldBounds = true;
                 target.events.onOutOfBounds.add(UfoOut, this);
             }
@@ -29,11 +31,15 @@ var playState = {
         bum.makeParticles('ufo');
         //bum.emitter.gravity = 200;
         
-        scoreText = game.add.text(100,650,'Score: 0',{fontSize: '32px',fill:'#ffffff'});
+        scoreText = game.add.text(100,650,'Score: 0',{font: '34px Berlin Sans FB',fill:'#ffffff'});
+        timeText = game.add.text(1100,650,'Heh',{font: '38px Berlin Sans FB',fill:'#ffffff'});
+        timer = game.time.create();
+        timerEvent = timer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 10, this.endTimer, this);
+        timer.start();
         
         function UfoOut(ufo) {
-        this.score = this.score - 10; 
-        scoreText.text = 'Score: ' + this.score;
+        score = score - 10; 
+        scoreText.text = 'Score: ' + score;
         ufo.kill();
         this.ile_statkow -= 1;
         }
@@ -62,10 +68,13 @@ var playState = {
         if(this.spacja.isDown){
             game.sound.play('shot');
         }
-        //punkt = new Phaser.Point(this.player.x+40,this.player.y+38.5);
+        
+        this.punkt.body.x = this.player.body.x + 40;
+        this.punkt.body.y = this.player.body.y + 38.5;
+        
         this.player.body.width = this.player.body.sourceWidth * 0.5;
         this.player.body.height = this.player.body.sourceHeight * 0.5;
-        game.physics.arcade.overlap(this.player, this.targets, wybuch, null, this);
+        game.physics.arcade.overlap(this.punkt, this.targets, wybuch, null, this);
         
         function wybuch(player,ufo)
         {
@@ -74,9 +83,9 @@ var playState = {
             bum.x = ufo.x + 67;
             bum.y = ufo.y + 47.5;
             ufo.kill();
-            this.score += 10;
+            score += 10;
             this.ile_statkow -= 1;
-            scoreText.text = 'Score: ' + this.score;
+            scoreText.text = 'Score: ' + score;
             }
         }
         if(this.ile_statkow === 0)
@@ -88,20 +97,39 @@ var playState = {
                 target.body.gravity.y = Math.round((Math.random()*40));
                 target.checkWorldBounds = true;
                 target.events.onOutOfBounds.add(UfoOut, this);
-            }  
+            } 
             }
         function UfoOut(ufo) {
-        this.score = this.score - 10; 
-        scoreText.text = 'Score: ' + this.score;
+        score = score - 10; 
+        scoreText.text = 'Score: ' + score;
         ufo.kill();
         this.ile_statkow -= 1;
         }
         
         if(this.targets.y > 300)
             {
-                this.score = this.score - 10; 
-                scoreText.text = 'Score: ' + this.score;
+                score = score - 10; 
+                scoreText.text = 'Score: ' + score;
             }
-           
-    }
+        
+},
+render: function() {
+        
+    function formatTime(s) {
+        var minutes = "0" + Math.floor(s / 60);
+        var seconds = "0" + (s - minutes * 60);
+        return minutes.substr(-2) + ":" + seconds.substr(-2);   
+        }
+    if (timer.running) {
+            timeText.text = (formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)));
+                             
+        }
+        else {
+            game.state.start('win'); 
+            }
+    
+},
+endTimer: function() {
+    timer.stop();
+}
 };

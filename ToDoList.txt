@@ -1,4 +1,6 @@
--po zniszczeniu tworzenie nowych statków
--gdy jakiœ statek zostanie nie zestrzelony to - 10 pkt
--dodawanie 10 pkt za zniszczony statek
 -czasówka; po jakimœ czasie koniec gry i podsumowanie punktów
+-obiekty których nie wolno niszczyæ bo minusowe punkty bêd¹ albo/i jakieœ rzeczy w stylu:
+a)zwolnienie celownika
+b)brak mo¿liwoœci strzelania na jakiœ czas
+c)
+
