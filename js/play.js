@@ -9,6 +9,10 @@ var playState = {
         
         score = 0;
         this.ile_statkow = 8;
+        this.czas = 0;
+        this.strzal = true;
+        this.wybuchEnable = false;
+        this.x = true;
         
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
@@ -22,7 +26,7 @@ var playState = {
         for(let i=0;i<8;i++)
             {
                 var target = this.targets.create(Math.round((Math.random()*1146)),0,'ufo');
-                target.body.gravity.y = Math.round((Math.random()*120));
+                target.body.gravity.y = Math.round((Math.random()*60));
                 target.checkWorldBounds = true;
                 target.events.onOutOfBounds.add(UfoOut, this);
             }
@@ -34,7 +38,7 @@ var playState = {
         scoreText = game.add.text(100,650,'Score: 0',{font: '34px Berlin Sans FB',fill:'#ffffff'});
         timeText = game.add.text(1100,650,'Heh',{font: '38px Berlin Sans FB',fill:'#ffffff'});
         timer = game.time.create();
-        timerEvent = timer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 10, this.endTimer, this);
+        timerEvent = timer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 40, this.endTimer, this);
         timer.start();
         
         function UfoOut(ufo) {
@@ -49,6 +53,9 @@ var playState = {
 	update: function() {
         
         game.world.bringToTop(this.player);
+        this.czas += game.time.elapsed;
+        this.spacja.onDown.add(this.funkcjaX, this);
+        //this.spacja.onUp.add(this.funkcjaX, this);
         
 		if (this.cursors.left.isDown){
 	        this.player.body.x -= 10;
@@ -65,9 +72,17 @@ var playState = {
 	    if (this.cursors.up.isDown){
 	        this.player.body.y -= 10;
 	    } 
-        if(this.spacja.isDown){
+        if(this.spacja.isDown && this.strzal == true && this.x == true){
             game.sound.play('shot');
+            this.czas += game.time.elapsed;
+            this.strzal = false;
         }
+        if(this.czas >= 500)
+            {        
+            this.czas = 0;        
+            this.strzal = true;
+            this.wybuchEnable = true;
+            }
         
         this.punkt.body.x = this.player.body.x + 40;
         this.punkt.body.y = this.player.body.y + 38.5;
@@ -78,13 +93,14 @@ var playState = {
         
         function wybuch(player,ufo)
         {
-            if(this.spacja.isDown){
+            if(this.spacja.isDown && this.wybuchEnable == true && this.x == true){
             bum.start(true,500,null,20);
             bum.x = ufo.x + 67;
             bum.y = ufo.y + 47.5;
             ufo.kill();
             score += 10;
             this.ile_statkow -= 1;
+            this.wybuchEnable = false;
             scoreText.text = 'Score: ' + score;
             }
         }
@@ -113,7 +129,10 @@ var playState = {
             }
         
 },
-render: function() {
+    funkcjaX: function () {
+        this.x = !this.x;
+        },
+    render: function() {
         
     function formatTime(s) {
         var minutes = "0" + Math.floor(s / 60);
