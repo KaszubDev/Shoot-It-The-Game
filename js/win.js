@@ -16,7 +16,7 @@ var winState = {
         this.button.input.useHandCursor = true;
         this.autorButton.input.useHandCursor = true;
         this.krzyzyk.input.useHandCursor = true;
-        this.x = true;
+        this.y = true;
         muzyka.play('', 0,1,true);
         
         this.x = 1;
@@ -38,21 +38,20 @@ var winState = {
       this.x = this.x + 1;
     },
     about: function () {
-        if(this.x = true)
+        if(this.y = true)
             {
             this.oMnie.visible = true;
-            this.x = false;
+            this.y = false;
             this.krzyzyk.visible = true;
             }
     },
     close: function () {
-      this.x = true;
+      this.y = true;
       this.oMnie.visible = false;
       this.krzyzyk.visible = false;
     },
 	restartGame: function () {
         game.state.start('menu');    
     },
-
 
 };

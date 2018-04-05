@@ -3,7 +3,6 @@ var playState = {
 	create: function() {
         game.add.sprite(0,0,'tlo');
         this.player = game.add.sprite(Math.round((Math.random()*1200)), Math.round((Math.random()*700)), 'celownik');
-        //punkt = new Phaser.Point(this.player.x+40,this.player.y+38.5);
         this.punkt = game.add.sprite(0,0,'puste');
         game.physics.enable(this.punkt, Phaser.Physics.ARCADE);
         
@@ -55,7 +54,6 @@ var playState = {
         game.world.bringToTop(this.player);
         this.czas += game.time.elapsed;
         this.spacja.onDown.add(this.funkcjaX, this);
-        //this.spacja.onUp.add(this.funkcjaX, this);
         
 		if (this.cursors.left.isDown){
 	        this.player.body.x -= 10;
