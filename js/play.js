@@ -10,8 +10,8 @@ var playState = {
         this.ile_statkow = 8;
         this.czas = 0;
         this.strzal = true;
-        this.wybuchEnable = false;
-        this.x = true;
+        this.wybuchEnable = true;
+        this.x = false;
         
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
@@ -54,6 +54,7 @@ var playState = {
         game.world.bringToTop(this.player);
         this.czas += game.time.elapsed;
         this.spacja.onDown.add(this.funkcjaX, this);
+        this.spacja.onUp.add(this.funkcjaX, this);
         
 		if (this.cursors.left.isDown){
 	        this.player.body.x -= 10;
@@ -72,11 +73,9 @@ var playState = {
 	    } 
         if(this.spacja.isDown && this.strzal == true && this.x == true){
             game.sound.play('shot');
-            this.czas += game.time.elapsed;
             this.strzal = false;
         }
-        if(this.czas >= 500)
-            {        
+        if(this.czas >= 500){        
             this.czas = 0;        
             this.strzal = true;
             this.wybuchEnable = true;
@@ -113,15 +112,14 @@ var playState = {
                 target.events.onOutOfBounds.add(UfoOut, this);
             } 
             }
-        function UfoOut(ufo) {
+        function UfoOut(ufo){
         score = score - 10; 
         scoreText.text = 'Score: ' + score;
         ufo.kill();
         this.ile_statkow -= 1;
         }
         
-        if(this.targets.y > 300)
-            {
+        if(this.targets.y > 300){
                 score = score - 10; 
                 scoreText.text = 'Score: ' + score;
             }
